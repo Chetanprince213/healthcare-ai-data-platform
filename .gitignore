@@ -1,0 +1,15 @@
+﻿.venv/
+__pycache__/
+.pytest_cache/
+.env
+.env.*
+!.env.example
+
+data/raw/
+data/processed/
+data/bronze/
+data/silver/
+data/gold/
+data/quarantine/
+
+*.log

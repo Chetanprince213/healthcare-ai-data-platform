@@ -1,0 +1,49 @@
+
+name: Healthcare Data Pipeline CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  healthcare-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements-ci.txt
+
+      - name: Generate synthetic healthcare data
+        run: |
+          python src/ingestion/generate_healthcare_data.py
+
+      - name: Validate synthetic source data
+        run: |
+          python src/quality/validate_healthcare_data.py
+
+      - name: Run Bronze ingestion
+        run: |
+          python src/ingestion/bronze_ingestion.py
+
+      - name: Run Silver transformation
+        run: |
+          python src/transformation/silver_transformation.py
+
+      - name: Run Gold transformation
+        run: |
+          python src/transformation/gold_transformation.py
+
+      - name: Run automated tests
+        run: |
+          python -m pytest tests -v
