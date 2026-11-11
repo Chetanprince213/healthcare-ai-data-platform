@@ -39,9 +39,18 @@ jobs:
       - name: Run Silver transformation
         run: |
           python src/transformation/silver_transformation.py
+
       - name: Generate synthetic FHIR resources
         run: |
           python src/ingestion/generate_fhir_data.py
+
+      - name: Validate FHIR resources and quarantine invalid records
+        run: |
+          python src/quality/validate_fhir.py
+
+      - name: Run FHIR quarantine test
+        run: |
+          python -m pytest tests/test_fhir_quarantine.py -v
 
       - name: Run Gold transformation
         run: |
