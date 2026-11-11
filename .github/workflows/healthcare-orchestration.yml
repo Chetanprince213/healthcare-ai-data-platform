@@ -50,6 +50,9 @@ jobs:
       - name: Validate FHIR resources
         run: python src/quality/validate_fhir.py
 
+      - name: Monitor healthcare data quality
+        run: python src/monitoring/healthcare_monitor.py
+
       - name: Patient CDC
         run: python src/cdc/patient_cdc.py
 
