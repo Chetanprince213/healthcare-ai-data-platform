@@ -39,6 +39,9 @@ jobs:
       - name: Run Silver transformation
         run: |
           python src/transformation/silver_transformation.py
+      - name: Generate synthetic FHIR resources
+        run: |
+          python src/ingestion/generate_fhir_data.py
 
       - name: Run Gold transformation
         run: |
