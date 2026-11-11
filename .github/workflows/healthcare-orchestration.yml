@@ -44,6 +44,9 @@ jobs:
       - name: Gold transformation
         run: python src/transformation/gold_transformation.py
 
+      - name: Register healthcare data lineage
+        run: python src/lineage/healthcare_lineage.py
+
       - name: Generate FHIR resources
         run: python src/ingestion/generate_fhir_data.py
 
