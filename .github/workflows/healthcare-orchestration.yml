@@ -1,0 +1,63 @@
+
+name: Healthcare Pipeline Orchestration
+
+on:
+  workflow_dispatch:
+
+jobs:
+  orchestrate-healthcare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements-ci.txt
+
+      - name: Generate healthcare data
+        run: python src/ingestion/generate_healthcare_data.py
+
+      - name: Validate healthcare data
+        run: python src/quality/validate_healthcare_data.py
+
+      - name: Bronze ingestion
+        run: python src/ingestion/bronze_ingestion.py
+
+      - name: Silver transformation
+        run: python src/transformation/silver_transformation.py
+
+      - name: Gold transformation
+        run: python src/transformation/gold_transformation.py
+
+      - name: Generate FHIR resources
+        run: python src/ingestion/generate_fhir_data.py
+
+      - name: Validate FHIR resources
+        run: python src/quality/validate_fhir.py
+
+      - name: Patient CDC
+        run: python src/cdc/patient_cdc.py
+
+      - name: Patient SCD Type 2
+        run: python src/scd/patient_scd2.py
+
+      - name: PySpark healthcare analytics
+        run: python src/spark/healthcare_spark_etl.py
+
+      - name: Run automated tests
+        run: python -m pytest tests -v
