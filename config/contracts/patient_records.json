@@ -1,0 +1,28 @@
+﻿{
+  "dataset": "patient_records",
+  "version": "1.0.0",
+  "description": "Contract for synthetic healthcare patient records",
+  "allow_extra_columns": false,
+  "columns": {
+    "patient_id": {
+      "type": "string",
+      "nullable": false,
+      "unique": true
+    },
+    "region": {
+      "type": "string",
+      "nullable": false,
+      "allowed_values": ["North", "South", "East", "West"]
+    },
+    "appointment_status": {
+      "type": "string",
+      "nullable": false,
+      "allowed_values": [
+        "completed",
+        "cancelled",
+        "scheduled",
+        "no_show"
+      ]
+    }
+  }
+}
