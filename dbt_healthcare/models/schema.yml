@@ -1,0 +1,27 @@
+﻿version: 2
+
+sources:
+  - name: healthcare_raw
+    schema: main_raw
+    tables:
+      - name: raw_patients
+        columns:
+          - name: patient_id
+            data_tests:
+              - not_null
+              - unique
+          - name: region
+            data_tests:
+              - not_null
+
+models:
+  - name: patient_counts
+    description: Patient counts grouped by region.
+    columns:
+      - name: region
+        data_tests:
+          - not_null
+          - unique
+      - name: patient_count
+        data_tests:
+          - not_null

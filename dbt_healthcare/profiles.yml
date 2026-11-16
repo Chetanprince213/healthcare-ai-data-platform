@@ -1,0 +1,7 @@
+﻿healthcare_analytics:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: "C:/Users/DELL/Documents/healthcare-ai-platform/data/dbt_runtime/healthcare.duckdb"
+      threads: 2

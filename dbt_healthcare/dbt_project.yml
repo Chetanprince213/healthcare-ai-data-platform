@@ -1,0 +1,19 @@
+﻿name: healthcare_analytics
+version: "1.0.0"
+config-version: 2
+
+profile: healthcare_analytics
+
+model-paths:
+  - models
+
+seed-paths:
+  - seeds
+
+models:
+  healthcare_analytics:
+    +materialized: table
+
+seeds:
+  healthcare_analytics:
+    +schema: raw

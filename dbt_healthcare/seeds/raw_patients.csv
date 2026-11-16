@@ -1,0 +1,6 @@
+patient_id,region,appointment_status
+P0001,North,completed
+P0002,South,completed
+P0003,North,cancelled
+P0004,South,completed
+P0005,North,completed
