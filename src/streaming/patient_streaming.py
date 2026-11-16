@@ -59,7 +59,7 @@ try:
 
     if output_dir.exists() or checkpoint_dir.exists():
         raise FileExistsError(
-            "Step 25 output or checkpoint already exists. "
+            "Streaming output or checkpoint already exists. "
             "Inspect existing data before starting a new run."
         )
 

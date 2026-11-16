@@ -117,7 +117,7 @@ def make_observations(encounters):
 def main():
     if not PATIENT_CSV.exists() or not APPOINTMENT_CSV.exists():
         raise FileNotFoundError(
-            "Silver CSV files missing. Run Step 9 first."
+            "Silver CSV files missing. Run the upstream data preparation pipeline first."
         )
 
     patients = make_patients(read_csv(PATIENT_CSV))
