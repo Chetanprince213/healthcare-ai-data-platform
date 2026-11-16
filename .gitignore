@@ -1,15 +1,31 @@
-﻿.venv/
+﻿# Python environments
+.venv/
+.venv_delta/
+venv/
 __pycache__/
+*.py[cod]
 .pytest_cache/
+
+# Environment variables and secrets
 .env
 .env.*
 !.env.example
 
-data/raw/
-data/processed/
-data/bronze/
-data/silver/
-data/gold/
-data/quarantine/
+# Generated healthcare datasets
+data/
+step21_independent_lab/
 
-*.logdata/fhir/
+# Logs and temporary files
+*.log
+*.tmp
+
+# Local Spark artifacts
+spark-warehouse/
+metastore_db/
+derby.log
+
+# IDE and operating system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
