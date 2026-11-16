@@ -99,7 +99,7 @@ try:
             f"Missing Delta transaction log: {path}"
         )
 
-    print("STEP 21 COMPLETED SUCCESSFULLY")
+    print("DELTA LAKEHOUSE COMPLETED SUCCESSFULLY")
 
 finally:
     spark.stop()

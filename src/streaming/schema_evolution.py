@@ -91,7 +91,7 @@ try:
     assert old_record["visit_type"] is None
     assert new_record["visit_type"] == "Follow-up"
 
-    print("\nSTEP 25 SCHEMA EVOLUTION VERIFIED SUCCESSFULLY")
+    print("\nSCHEMA EVOLUTION VERIFIED SUCCESSFULLY")
 
 finally:
     spark.stop()

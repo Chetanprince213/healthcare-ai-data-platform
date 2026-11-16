@@ -89,7 +89,7 @@ try:
     assert checkpoint_dir.exists()
     assert output_dir.exists()
 
-    print("\nSTEP 25 STREAMING VERIFIED SUCCESSFULLY")
+    print("\nHEALTHCARE STREAMING VERIFIED SUCCESSFULLY")
 
 finally:
     spark.stop()

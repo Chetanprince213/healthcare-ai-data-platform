@@ -1,4 +1,4 @@
-# Step 22 — Advanced SQL Evidence
+# Healthcare SQL Analytics — Advanced SQL Evidence
 
 ## Objective
 Practice real SQL queries using synthetic healthcare data.
@@ -34,7 +34,7 @@ SQL concepts implemented:
 Paste the actual PowerShell output here after successful execution.
 
 ## Result
-Status: **PASS only if the script prints `STEP 22 SQL ANALYTICS VERIFIED SUCCESSFULLY`.**
+Status: **PASS only if the script prints `HEALTHCARE SQL ANALYTICS VERIFIED SUCCESSFULLY`.**
 
 ## Limitations
 The exercise uses SQLite. It does not demonstrate a running MySQL or PostgreSQL server. All records are synthetic.

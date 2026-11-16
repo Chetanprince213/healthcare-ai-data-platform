@@ -124,7 +124,7 @@ try:
     assert result["previous_city"] == "Chennai"
     assert result["city"] == "Delhi"
 
-    print("\nSTEP 23 DIMENSIONAL MODEL VERIFIED SUCCESSFULLY")
+    print("\nDIMENSIONAL MODEL VERIFIED SUCCESSFULLY")
 
 finally:
     conn.close()

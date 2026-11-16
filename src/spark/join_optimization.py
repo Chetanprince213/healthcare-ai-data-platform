@@ -73,7 +73,7 @@ try:
 
     assert optimized_join.count() == 5
 
-    print("\nSTEP 24 PYSPARK OPTIMIZATION VERIFIED SUCCESSFULLY")
+    print("\nPYSPARK JOIN OPTIMIZATION VERIFIED SUCCESSFULLY")
 
 finally:
     spark.stop()

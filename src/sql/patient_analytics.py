@@ -149,7 +149,7 @@ try:
         row["total_revenue"] for row in department_metrics
     ) == 11700
 
-    print("\nSTEP 22 SQL ANALYTICS VERIFIED SUCCESSFULLY")
+    print("\nHEALTHCARE SQL ANALYTICS VERIFIED SUCCESSFULLY")
 
 finally:
     conn.close()

@@ -1,4 +1,4 @@
-# Step 24 — Advanced PySpark Optimization Evidence
+# PySpark Join Optimization — Advanced PySpark Optimization Evidence
 
 ## Objective
 Compare standard joins with broadcast joins and inspect Spark physical execution plans.
@@ -21,7 +21,7 @@ Compare standard joins with broadcast joins and inspect Spark physical execution
 ## Verification
 - Optimized physical plan contains `BroadcastHashJoin`.
 - Optimized join returns five patient records.
-- Script completed with `STEP 24 PYSPARK OPTIMIZATION VERIFIED SUCCESSFULLY`.
+- Script completed with `PYSPARK JOIN OPTIMIZATION VERIFIED SUCCESSFULLY`.
 
 ## Result
 PASS — Real local PySpark execution verified.

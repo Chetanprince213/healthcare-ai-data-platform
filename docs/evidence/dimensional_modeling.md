@@ -1,4 +1,4 @@
-# Step 23 — Dimensional Modeling Evidence
+# Healthcare Dimensional Modeling — Dimensional Modeling Evidence
 
 ## Objective
 Implement a star-schema-style dimensional model and demonstrate Slowly Changing Dimensions (SCD) Types 1, 2, and 3.
@@ -29,7 +29,7 @@ Expected results:
 ## Result
 Record PASS only after the script prints:
 
-`STEP 23 DIMENSIONAL MODEL VERIFIED SUCCESSFULLY`
+`DIMENSIONAL MODEL VERIFIED SUCCESSFULLY`
 
 ## Limitations
 Local SQLite exercise with synthetic records. Not a production healthcare database.
