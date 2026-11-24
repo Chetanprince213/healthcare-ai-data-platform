@@ -1,0 +1,16 @@
+{
+    "pipeline_name": "healthcare_incremental_processing",
+    "implementation_mode": "local_duckdb_analogue",
+    "source_path": "data/orchestration/patients.csv",
+    "database_path": "data/incremental/healthcare_incremental.duckdb",
+    "report_path": "data/incremental/reports/incremental_metrics.json",
+    "log_path": "logs/incremental/incremental_processing.log",
+    "consumer_name": "patient_analytics_consumer",
+    "target_lag_seconds": 60,
+    "schedule_interval_seconds": 1,
+    "schedule_cycles": 2,
+    "max_attempts": 3,
+    "retry_delay_seconds": 1,
+    "threads": 2,
+    "memory_limit": "512MB"
+}

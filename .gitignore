@@ -39,3 +39,6 @@ logs/ingestion/
 data/orchestration/
 data/validation/
 logs/orchestration/
+
+data/incremental/
+logs/incremental/
