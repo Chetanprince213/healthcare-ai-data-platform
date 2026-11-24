@@ -7,14 +7,14 @@ from pyspark.sql.types import (
 )
 
 base = Path(__file__).resolve().parents[2]
-lab = base / "data" / "step25_streaming"
+lab = base / "data" / "patient_streaming"
 input_dir = lab / "input"
 output_dir = lab / "output"
 checkpoint_dir = lab / "checkpoint"
 
 spark = (
     SparkSession.builder
-    .appName("Step25HealthcareStreaming")
+    .appName("component_25HealthcareStreaming")
     .master("local[2]")
     .config("spark.driver.memory", "2g")
     .config("spark.sql.shuffle.partitions", "2")

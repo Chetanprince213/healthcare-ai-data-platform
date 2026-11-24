@@ -10,7 +10,7 @@ from pyspark.sql.types import (
 )
 
 base = Path(__file__).resolve().parents[2]
-lab = base / "data" / "step25_schema_evolution"
+lab = base / "data" / "schema_evolution"
 
 input_dir = lab / "input"
 output_dir = lab / "output"
@@ -26,7 +26,7 @@ schema = StructType([
 
 spark = (
     SparkSession.builder
-    .appName("Step25SchemaEvolution")
+    .appName("component_25SchemaEvolution")
     .master("local[2]")
     .config("spark.driver.memory", "2g")
     .getOrCreate()

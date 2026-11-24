@@ -3,7 +3,7 @@ from pyspark.sql.functions import broadcast, count
 
 spark = (
     SparkSession.builder
-    .appName("Step24PySparkOptimization")
+    .appName("component_24PySparkOptimization")
     .master("local[2]")
     .config("spark.driver.memory", "2g")
     .config("spark.sql.shuffle.partitions", "2")

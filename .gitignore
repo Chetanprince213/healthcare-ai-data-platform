@@ -13,7 +13,7 @@ __pycache__/
 
 # Generated healthcare datasets
 data/
-step21_independent_lab/
+healthcare_delta_lakehouse/
 
 # Logs and temporary files
 *.log
@@ -42,3 +42,7 @@ logs/orchestration/
 
 data/incremental/
 logs/incremental/
+
+.user.yml
+.mypy_cache/
+.ruff_cache/
