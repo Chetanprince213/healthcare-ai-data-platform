@@ -1,4 +1,4 @@
-﻿# Python environments
+# Python environments
 .venv/
 .venv_delta/
 venv/
@@ -33,3 +33,6 @@ data/warehouse/*.duckdb.wal
 data/warehouse/reports/
 logs/warehouse/
 data/warehouse/*.duckdb
+data/staging/healthcare/
+data/training_labs/step_36_result.json
+logs/ingestion/
