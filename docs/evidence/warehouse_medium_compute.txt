@@ -1,0 +1,57 @@
+╭─ Summary ───────────╮
+│ Total Time: 0.0052s │
+╰─────────────────────╯
+╭─ Projection ──────────────────────────────────────────────╮
+│ Projections:                                              │
+│ __internal_decompress_string(#0), #1, #2,                 │
+│ CAST(#3 AS HUGEINT), CAST(#4 AS HUGEINT)                  │
+│ 3 rows                                                0µs │
+╰─────────────────────────────┬─────────────────────────────╯
+╭─ Order By ──────────────────┴─────────────────────────────╮
+│ Order By: region ASC                                      │
+│ 3 rows                                                0µs │
+╰─────────────────────────────┬─────────────────────────────╯
+╭─ Projection ────────────────┴─────────────────────────────╮
+│ Projections:                                              │
+│ __internal_compress_string_utinyint(#0), #1, #2,          │
+│ CAST(#3 AS INTEGER), CAST(#4 AS INTEGER)                  │
+│ 3 rows                                                0µs │
+╰─────────────────────────────┬─────────────────────────────╯
+╭─ Projection ────────────────┴─────────────────────────────╮
+│ Projections: region, total_records, average_age,          │
+│              total_visits, missed_appointments            │
+│ 3 rows                                                0µs │
+╰─────────────────────────────┬─────────────────────────────╯
+╭─ Projection ────────────────┴─────────────────────────────╮
+│ Projections:                                              │
+│ #0, #1, "/"(CAST(#2 AS DOUBLE), CAST(#5 AS DOUBLE)), #3,  │
+│ #4                                                        │
+│ 3 rows                                                0µs │
+╰─────────────────────────────┬─────────────────────────────╯
+╭─ Projection ────────────────┴─────────────────────────────╮
+│ Projections:                                              │
+│ __internal_decompress_string(#0), #1, #2, #3, #4, #1      │
+│ 3 rows                                                0µs │
+╰─────────────────────────────┬─────────────────────────────╯
+╭─ Perfect Hash Group By ─────┴─────────────────────────────╮
+│ Groups: #0                                                │
+│ Aggregates: count_star(), sum_no_overflow(#1),            │
+│             sum_no_overflow(#2), sum_no_overflow(#3)      │
+│ 3 rows                                                0µs │
+╰─────────────────────────────┒┎────────────────────────────╯
+╭─ Projection ────────────────┚┖────────────────────────────╮
+│ Projections: region, age, prior_visits, no_show           │
+│ 100,000 rows                                          0µs │
+╰─────────────────────────────┒┎────────────────────────────╯
+╭─ Projection ────────────────┚┖────────────────────────────╮
+│ Projections:                                              │
+│ __internal_compress_string_utinyint(#0), #1, #2, #3       │
+│ 100,000 rows                                          0µs │
+╰─────────────────────────────┒┎────────────────────────────╯
+╭─ Table Scan ────────────────┚┖────────────────────────────╮
+│ Table: healthcare_analytics.healthcare.benchmark_patients │
+│ Type: Sequential Scan                                     │
+│ Projections: region, age, prior_visits, no_show           │
+│ Row Groups Scanned: 1 / 1                                 │
+│ 100,000 rows                                          0µs │
+╰───────────────────────────────────────────────────────────╯

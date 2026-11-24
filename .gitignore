@@ -28,4 +28,8 @@ derby.log
 .vscode/
 .idea/
 .DS_Store
-Thumbs.db
+Thumbs.dbdata/warehouse/*.duckdb
+data/warehouse/*.duckdb.wal
+data/warehouse/reports/
+logs/warehouse/
+data/warehouse/*.duckdb

@@ -1,0 +1,19 @@
+╭─ Summary ───────────╮
+│ Total Time: 0.0038s │
+╰─────────────────────╯
+╭─ Ungrouped Aggregate ─────────────────────────────────────╮
+│ Aggregates: sum_no_overflow(#0)                           │
+│ 1 row                                                 0µs │
+╰─────────────────────────────┒┎────────────────────────────╯
+╭─ Projection ────────────────┚┖────────────────────────────╮
+│ Projections: prior_visits                                 │
+│ 33,000 rows                                           0µs │
+╰─────────────────────────────┒┎────────────────────────────╯
+╭─ Table Scan ────────────────┚┖────────────────────────────╮
+│ Table: healthcare_analytics.healthcare.benchmark_patients │
+│ Type: Sequential Scan                                     │
+│ Projections: prior_visits                                 │
+│ Filters: region = 'N'                                     │
+│ Row Groups Scanned: 1 / 1                                 │
+│ 33,000 rows                                           0µs │
+╰───────────────────────────────────────────────────────────╯
