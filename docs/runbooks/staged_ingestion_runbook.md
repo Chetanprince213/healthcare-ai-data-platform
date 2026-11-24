@@ -1,84 +1,41 @@
-# Staged Ingestion Operational Runbook
+# Staged Ingestion Runbook
 
 ## Execution
 
-From the project root:
-
     python -m src.snowflake.staged_ingestion
 
-## Testing
+## Automated Tests
 
     python -m pytest tests/unit/test_staged_ingestion.py -v
 
-## Landing Directory
+## Runtime Locations
 
-    data/staging/healthcare/landing/
+Landing: data/staging/healthcare/landing/
 
-Only completed CSV files are processed.
+Quarantine: data/staging/healthcare/quarantine/
 
-Files ending in .part are ignored.
+Exports: data/staging/healthcare/exports/
 
-## Database
+Reports: data/staging/healthcare/reports/
 
-    data/staging/healthcare/staged_ingestion.duckdb
-
-Catalog: staged_ingestion
-
-Schema: ingestion
-
-Tables:
-
-- patients
-- load_history
-- load_errors
-
-The catalog and schema names are intentionally different.
-
-## Monitoring
-
-    logs/ingestion/staged_ingestion.log
-
-    data/staging/healthcare/reports/ingestion_report.json
-
-## Export
-
-    data/staging/healthcare/exports/patients.parquet
-
-## Quarantine
-
-    data/staging/healthcare/quarantine/
-
-Review the associated error JSON before correcting
-and restaging a rejected file.
-
-Do not bypass data validation.
-
-## Duplicate Files
-
-Previously loaded file content is skipped.
-
-This is an expected successful idempotency outcome.
-
-## Database Locks
-
-Use a single ingestion writer.
-
-Close conflicting database connections before retrying.
+Logs: logs/ingestion/
 
 ## Recovery
 
-Correct the underlying issue and rerun the pipeline.
+Inspect operational logs and quarantine metadata.
 
-Successful file loads remain recorded in load history.
+Correct invalid input before restaging.
 
-Target insertion and load history are transactional.
+Previously loaded content is skipped automatically.
 
-Quarantine and export files are separate filesystem
-operations.
+Use a single database writer.
+
+Do not bypass validation or delete load history to
+force duplicate ingestion.
 
 ## Security
 
-Use synthetic healthcare data only.
+Only synthetic healthcare records are permitted.
 
-Do not commit runtime databases, raw logs,
-quarantine files or credentials.
+Runtime databases, quarantine files, credentials and
+operational logs remain outside version control.

@@ -1,11 +1,12 @@
 {
     "implementation_mode": "local_polling_simulation",
-    "source_path": "labs34_60/output/patients.csv",
+    "source_path": "data/orchestration/patients.csv",
     "landing_path": "data/staging/healthcare/landing",
     "quarantine_path": "data/staging/healthcare/quarantine",
     "database_path": "data/staging/healthcare/staged_ingestion.duckdb",
     "export_path": "data/staging/healthcare/exports/patients.parquet",
     "report_path": "data/staging/healthcare/reports/ingestion_report.json",
+    "validation_path": "data/validation/ingestion_validation_report.json",
     "log_path": "logs/ingestion/staged_ingestion.log",
     "poll_interval_seconds": 1,
     "max_poll_cycles": 3,

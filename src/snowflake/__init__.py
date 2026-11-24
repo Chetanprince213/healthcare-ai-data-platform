@@ -1,1 +1,1 @@
-"""Snowflake architecture learning modules."""
+"""Snowflake architecture components."""

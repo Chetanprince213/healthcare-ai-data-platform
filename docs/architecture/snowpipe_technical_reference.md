@@ -1,72 +1,43 @@
-# Snowflake Stages, COPY INTO and Snowpipe
+# Snowflake File Ingestion Technical Reference
 
-## Stage
-
-A location used to access files for loading or unloading.
+## Internal and External Stages
 
 Internal stages use Snowflake-managed storage.
 
-External stages reference external cloud storage.
+External stages reference cloud object storage.
 
-## File Format
+Storage integrations provide delegated access.
 
-Defines how staged files are interpreted.
+## Bulk Ingestion
 
-Examples include CSV, JSON and Parquet.
+COPY INTO loads staged files using warehouse compute.
 
-## COPY INTO
+Named file formats define source parsing behavior.
 
-Loads staged files into a target table or unloads
-table and query results into a stage.
+VALIDATION_MODE supports inspection of loading errors.
 
-## Snowpipe
+ON_ERROR determines applicable failure handling behavior.
 
-A managed continuous file ingestion service.
+## Continuous File Ingestion
 
-Auto-ingest can use cloud event notifications to
-discover new staged files.
+Snowpipe provides managed serverless ingestion.
 
-## Bulk Loading versus Snowpipe
+AUTO_INGEST can use cloud storage notifications.
 
-Bulk COPY is suitable for controlled batch ingestion
-using virtual warehouse compute.
-
-Snowpipe supports managed continuous file ingestion
-using serverless resources.
-
-## Storage Integration
-
-Provides delegated cloud storage access and avoids
-embedding long-lived credentials in stage definitions.
-
-## Duplicate Prevention
-
-Native Snowflake load history tracks loaded files
-under platform-specific rules.
-
-The local pipeline implements SHA-256 content hashes
-and target primary-key validation.
-
-## Error Handling
-
-ON_ERROR controls supported COPY loading behavior.
-
-VALIDATION_MODE inspects supported loading errors.
-
-Rejected local files are copied to quarantine with
-an error report.
+Snowpipe Streaming is a separate row-oriented service.
 
 ## Monitoring
 
-COPY_HISTORY provides load-history information.
+COPY_HISTORY exposes file loading information.
 
-SYSTEM$PIPE_STATUS provides pipe status information.
+SYSTEM$PIPE_STATUS provides pipe execution information.
 
-PIPE_USAGE_HISTORY provides pipe usage information.
+PIPE_USAGE_HISTORY provides ingestion usage information.
 
-## Experience Boundary
+## Implementation Boundary
 
-The project implements local ingestion and polling.
+The local platform implements transactional DuckDB COPY,
+polling, content fingerprinting and Parquet export.
 
-Actual Snowflake-managed Snowpipe and cloud event
-notifications have not been deployed.
+Snowflake-specific SQL is maintained as an architecture
+reference and has not been executed in a cloud account.

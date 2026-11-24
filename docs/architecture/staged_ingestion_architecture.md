@@ -1,238 +1,122 @@
-# Healthcare Staged File Ingestion
+# Healthcare Staged Ingestion Architecture
 
-## Overview
-
-A transactional incremental file ingestion pipeline
-implemented with Python, DuckDB and Parquet.
-
-All data is synthetic.
-
-## Local Architecture
+## Processing Flow
 
     Synthetic CSV
         |
         v
-    Landing Stage
+    Atomic Landing Stage
         |
         v
-    Polling File Discovery
+    File Discovery and SHA-256 Fingerprinting
         |
         v
-    SHA-256 Duplicate Detection
+    DuckDB COPY and Schema Validation
+        |
+        +--> Invalid Data --> Quarantine
         |
         v
-    CSV Schema Validation
+    Transactional Target Loading
         |
-        v
-    DuckDB COPY into Temporary Table
-        |
-        v
-    Data Quality Validation
-        |
-        +--> Invalid Files --> Quarantine
-        |
-        v
-    Transactional Target Insertion
-        |
-        +--> Load History and Audit Records
+        +--> Load History and Error Audit
         |
         v
     Parquet Export and Reconciliation
 
-## Snowflake Stages
+## Stage Management
 
-A stage identifies a file location used for loading
-or unloading data.
+Internal Snowflake stages use managed storage.
 
-### Internal Stages
+User stages and table stages are associated with
+their respective objects.
 
-Snowflake-managed file storage.
+Named stages are independently managed.
 
-User stages are associated with users.
+External stages reference cloud object storage.
 
-Table stages are associated with tables.
-
-Named internal stages are independently managed objects.
-
-### External Stages
-
-Reference external cloud storage such as Amazon S3,
-Azure Blob Storage or Google Cloud Storage.
-
-Storage integrations support delegated access without
-embedding long-lived cloud credentials in SQL.
+Storage integrations enable delegated access without
+embedding long-lived credentials.
 
 ## File Formats
 
-Snowflake supports CSV, JSON, Parquet, Avro, ORC and XML.
+CSV ingestion and Parquet export are implemented locally.
 
-File format objects describe how files are interpreted.
+JSON is used for configuration and operational reports.
 
-The local implementation ingests CSV and exports Parquet.
+Snowflake JSON, CSV and Parquet format definitions are
+included in the SQL reference.
 
-JSON is used for configuration, reporting and error metadata.
+## Bulk Loading
 
-JSON ingestion is covered by the Snowflake reference only.
+Snowflake COPY INTO table loads staged data.
 
-## Stage Commands
+COPY INTO location unloads table or query results.
 
-PUT uploads local files to supported internal stages.
+PUT, GET, LIST and REMOVE support stage file management,
+subject to client and stage compatibility.
 
-GET downloads files from supported internal stages.
+## Continuous Ingestion
 
-LIST displays staged files.
+Snowpipe provides managed serverless file ingestion.
 
-REMOVE deletes staged files.
+Cloud storage notifications can trigger auto-ingest.
 
-PUT and GET require a compatible client.
+The local application implements bounded polling rather
+than managed cloud event notifications.
 
-## COPY INTO
-
-COPY INTO table loads staged data into target tables.
-
-COPY INTO location unloads query or table results.
-
-Bulk loading typically uses virtual warehouse compute.
-
-The local implementation executes actual DuckDB COPY
-operations for CSV ingestion and Parquet export.
-
-DuckDB COPY is not Snowflake COPY INTO.
+Snowpipe Streaming is a separate row-oriented capability.
 
 ## Error Handling
 
-Snowflake COPY supports ON_ERROR options such as:
+Snowflake supports ON_ERROR and VALIDATION_MODE options
+for applicable loading configurations.
 
-- ABORT_STATEMENT
-- CONTINUE
-- SKIP_FILE
+The local pipeline rejects invalid files and records
+quarantine metadata.
 
-VALIDATION_MODE can inspect loading errors for supported
-COPY configurations without inserting the data.
+## Idempotency
 
-The local pipeline uses whole-file rejection and quarantine.
+SHA-256 fingerprints identify duplicate file content.
 
-## Snowpipe
+Primary keys prevent duplicate patient records.
 
-Snowpipe provides managed continuous file ingestion
-using serverless compute.
+Conflicting existing records are rejected.
 
-Auto-ingest can be triggered by cloud storage notifications.
+The local content-hash implementation differs from
+Snowflake native file-load tracking.
 
-For AWS, S3 event notifications and supported messaging
-configuration can notify Snowpipe about new files.
+## Transactions
 
-Snowpipe can also receive supported API-based notifications.
+Target insertion and successful load history are committed
+together.
 
-Snowpipe does not require a continuously running
-user-managed virtual warehouse for its ingestion compute.
+Quarantine and export filesystem operations are separate
+from the database transaction.
 
-Snowpipe Streaming is a separate row-oriented ingestion
-capability and is not implemented in this module.
-
-## Local Polling Analogue
-
-The local implementation uses a bounded polling loop.
-
-It discovers completed CSV files and processes new content.
-
-Files are published through a temporary filename followed
-by an atomic rename.
-
-Incomplete files are ignored.
-
-Polling is not equivalent to managed event-driven Snowpipe.
-
-## Idempotency and Deduplication
-
-SHA-256 fingerprints identify previously loaded content.
-
-Renaming a file does not change its content fingerprint.
-
-The load-history table records successful file ingestion.
-
-Patient primary keys and duplicate checks prevent
-duplicate patient records.
-
-Conflicting existing patient attributes are rejected.
-
-Updates and change-data-capture semantics are outside
-the scope of this append-oriented module.
-
-Snowflake native file-load tracking has its own
-metadata rules and retention limitations.
-
-The local hashing implementation is a separate design.
-
-## Data Quality
-
-- Expected CSV column names and order.
-- Source-to-stage row reconciliation.
-- Mandatory patient identifiers and regions.
-- Integer domain validation.
-- Valid age ranges.
-- Non-negative visit counts.
-- Binary no-show values.
-- Duplicate patient detection.
-- Existing-record conflict detection.
-- Target-to-Parquet reconciliation.
-
-## Transactional Reliability
-
-Target insertion and successful load-history recording
-occur in the same database transaction.
-
-Invalid input causes transaction rollback.
-
-Quarantine operations occur outside the database
-transaction and are not jointly atomic with it.
-
-The implementation assumes one ingestion writer.
+The implementation assumes a single ingestion writer.
 
 ## Monitoring
 
-Structured logs capture file discovery, successful loads,
-duplicate detection and validation failures.
+Local monitoring includes structured logs, execution
+reports, load history and error auditing.
 
-The ingestion report records source, target and export
-counts, file outcomes and execution duration.
+Snowflake monitoring references include COPY_HISTORY,
+PIPE_USAGE_HISTORY and SYSTEM$PIPE_STATUS.
 
-Snowflake-specific monitoring references include:
+## Cost Management
 
-- COPY_HISTORY
-- PIPE_USAGE_HISTORY
-- SYSTEM$PIPE_STATUS
-- SHOW PIPES
+Snowpipe uses managed ingestion resources.
 
-## Cost Optimization
+Appropriate file sizes, batching and duplicate prevention
+can improve ingestion efficiency.
 
-Snowpipe has managed ingestion charges.
+Actual charges depend on the applicable pricing model.
 
-Cost depends on the applicable ingestion pricing model
-and workload characteristics.
+## Deployment Scope
 
-Appropriate file sizes, batching and avoiding unnecessary
-reprocessing can improve ingestion efficiency.
+Python, DuckDB, CSV and Parquet are executed locally.
 
-No Snowflake or AWS resources are created locally.
+Snowflake stages, storage integrations and Snowpipe are
+documented through unexecuted SQL references.
 
-## Implementation Scope
-
-LOCAL SIMULATION - NOT DEPLOYED TO CLOUD.
-
-Implemented directly:
-
-- Python ingestion application.
-- Local file staging.
-- DuckDB COPY.
-- Incremental polling.
-- Content-based file deduplication.
-- Transactional target insertion.
-- Load history.
-- Error auditing and quarantine.
-- Parquet export.
-- Automated testing.
-
-Snowflake stages, storage integrations, COPY INTO,
-Snowpipe and cloud event notifications are studied
-through documentation and unexecuted SQL references.
+No cloud infrastructure is provisioned.

@@ -1,0 +1,7 @@
+{
+    "source_path": "data/orchestration/patients.csv",
+    "output_path": "data/orchestration",
+    "log_path": "logs/orchestration/workflow.log",
+    "max_attempts": 3,
+    "retry_delay_seconds": 1
+}

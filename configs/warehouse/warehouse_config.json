@@ -1,22 +1,22 @@
 {
-    "warehouse_name": "healthcare_analytics",
-    "implementation_mode": "local_duckdb",
-    "source_path": "labs34_60/output/patients.csv",
-    "database_path": "data/warehouse/healthcare_analytics.duckdb",
-    "report_path": "data/warehouse/reports/warehouse_metrics.json",
-    "log_path": "logs/warehouse/warehouse_execution.log",
-    "benchmark_iterations": 5,
-    "benchmark_multiplier": 1000,
-    "compute_profiles": [
-        {
-            "name": "small_compute",
-            "threads": 1,
-            "memory_limit": "512MB"
-        },
-        {
-            "name": "medium_compute",
-            "threads": 2,
-            "memory_limit": "1GB"
-        }
-    ]
+    "warehouse_name":  "healthcare_analytics",
+    "implementation_mode":  "local_duckdb",
+    "source_path":  "data/orchestration/patients.csv",
+    "database_path":  "data/warehouse/healthcare_analytics.duckdb",
+    "report_path":  "data/warehouse/reports/warehouse_metrics.json",
+    "log_path":  "logs/warehouse/warehouse_execution.log",
+    "benchmark_iterations":  5,
+    "benchmark_multiplier":  1000,
+    "compute_profiles":  [
+                             {
+                                 "name":  "small_compute",
+                                 "threads":  1,
+                                 "memory_limit":  "512MB"
+                             },
+                             {
+                                 "name":  "medium_compute",
+                                 "threads":  2,
+                                 "memory_limit":  "1GB"
+                             }
+                         ]
 }
